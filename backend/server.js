@@ -12,9 +12,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+
 // Routes
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/profile", require("./routes/profile")); // ← Add this// Basic route
+app.use("/api/profile", require("./routes/profile")); 
+app.use("/api/jobs", require("./routes/job"));
+
+// Home route
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
