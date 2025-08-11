@@ -51,8 +51,8 @@ export default function App() {
       <BrowserRouter>
         <div className={`min-h-screen transition-all duration-500 ${
           isDark 
-            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white' 
-            : 'bg-gradient-to-br from-blue-50 via-white to-purple-50 text-gray-900'
+            ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white' 
+            : 'bg-gradient-to-br from-blue-50 via-white to-purple-50 text-slate-900'
         }`}>
           <Routes>
             <Route path="/" element={<Login />} />

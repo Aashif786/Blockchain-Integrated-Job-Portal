@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../utils/api";
-import ConnectWallet from "./components/ConnectWallet";
+// import ConnectWallet from "./components/ConnectWallet";
 
 export default function Dashboard() {
   const [profile, setProfile] = useState({ bio: "", skills: [], linkedin: "", walletAddress: "" });
