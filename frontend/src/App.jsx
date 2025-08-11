@@ -51,14 +51,18 @@ export default function App() {
       <BrowserRouter>
         <div className={`min-h-screen transition-all duration-500 ${
           isDark 
-            ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white' 
-            : 'bg-gradient-to-br from-blue-50 via-white to-purple-50 text-slate-900'
+            ? 'bg-slate-900 text-white' 
+            : 'bg-gray-50 text-slate-900'
         }`}>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={
-              <div className="flex flex-col min-h-screen">
+              <div className={`flex flex-col min-h-screen ${
+                isDark 
+                  ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-black' 
+                  : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
+              }`}>
                 <Navbar />
                 <main className="flex-1 animate-fadeIn">
                   <Dashboard />
@@ -67,7 +71,11 @@ export default function App() {
               </div>
             } />
             <Route path="/jobs" element={
-              <div className="flex flex-col min-h-screen">
+              <div className={`flex flex-col min-h-screen ${
+                isDark 
+                  ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-black' 
+                  : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
+              }`}>
                 <Navbar />
                 <main className="flex-1 animate-fadeIn">
                   <JobFeed />
@@ -76,7 +84,11 @@ export default function App() {
               </div>
             } />
             <Route path="/post-job" element={
-              <div className="flex flex-col min-h-screen">
+              <div className={`flex flex-col min-h-screen ${
+                isDark 
+                  ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-black' 
+                  : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
+              }`}>
                 <Navbar />
                 <main className="flex-1 animate-fadeIn">
                   <PostJob />

@@ -6,6 +6,7 @@ const profileSchema = new mongoose.Schema({
   skills: [String],
   linkedin: String,
   walletAddress: String,
+  profilePicture: String,
 }, { timestamps: true });
 
 module.exports = mongoose.model("Profile", profileSchema);

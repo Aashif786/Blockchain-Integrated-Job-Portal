@@ -49,7 +49,7 @@ export default function Login() {
             : 'bg-white/80 text-gray-600 hover:bg-gray-100'
         } backdrop-blur-sm shadow-lg`}
       >
-        {isDark ? '☀️' : '🌙'}
+        {isDark ? 'Light' : 'Dark'}
       </button>
 
       <div className={`w-full max-w-md backdrop-blur-sm border rounded-2xl shadow-2xl overflow-hidden animate-slideInUp relative ${

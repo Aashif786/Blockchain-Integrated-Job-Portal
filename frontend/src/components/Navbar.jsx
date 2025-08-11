@@ -1,13 +1,30 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../App";
+import axios from "axios";
 
 export default function Navbar() {
   const { isDark, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get('http://localhost:5000/api/auth/me', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setUser(res.data);
+      } catch (err) {
+        console.error('Failed to fetch user data');
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -15,9 +32,9 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: '🏠' },
-    { path: '/jobs', label: 'Jobs', icon: '💼' },
-    { path: '/post-job', label: 'Post Job', icon: '✏️' },
+    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/jobs', label: 'Jobs' },
+    { path: '/post-job', label: 'Post Job' },
   ];
 
   return (
@@ -30,8 +47,20 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center animate-pulse">
-              <span className="text-white font-bold text-sm">JB</span>
+            <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gradient-to-r from-blue-500 to-purple-600">
+              {user?.profilePicture ? (
+                <img 
+                  src={user.profilePicture} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                  </span>
+                </div>
+              )}
             </div>
             <span className="font-bold text-xl bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
               JobBoard
@@ -44,7 +73,7 @@ export default function Navbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 ${
+                className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 ${
                   location.pathname === item.path
                     ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
                     : isDark
@@ -52,7 +81,6 @@ export default function Navbar() {
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
-                <span>{item.icon}</span>
                 <span className="font-medium">{item.label}</span>
               </Link>
             ))}
@@ -69,7 +97,7 @@ export default function Navbar() {
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              {isDark ? '☀️' : '🌙'}
+              {isDark ? 'Light' : 'Dark'}
             </button>
 
             {/* Logout Button */}
@@ -104,7 +132,7 @@ export default function Navbar() {
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
                   location.pathname === item.path
                     ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
                     : isDark
@@ -112,7 +140,6 @@ export default function Navbar() {
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
-                <span>{item.icon}</span>
                 <span className="font-medium">{item.label}</span>
               </Link>
             ))}
